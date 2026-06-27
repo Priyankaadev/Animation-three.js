@@ -1,7 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
@@ -66,12 +65,6 @@ const rgbShiftPass = new ShaderPass(RGBShiftShader);
 rgbShiftPass.uniforms['amount'].value = 0.0015;
 
 composer.addPass(rgbShiftPass);
-
-// ---------------- CONTROLS ----------------
-
-const controls = new OrbitControls(camera, renderer.domElement);
-
-controls.enableDamping = true;
 
 // ---------------- LIGHTS ----------------
 
@@ -170,14 +163,27 @@ loader.load(
 
 );
 
+window.addEventListener("mousemove", (e)=>{
+ if (model){
+  const rotationX = (e.clientX/ window.innerWidth -.5) * (Math.PI * 0.3)
+  const rotationY = (e.clientY/ window.innerHeight -.5) *( Math.PI * 0.3)
+  model.rotation.y = rotationX;
+  model.rotation.x = rotationY;
+ }})
+
+window.addEventListener("resize", ()=>{
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight)
+})
 // ---------------- ANIMATION ----------------
 
 function animate() {
 
   window.requestAnimationFrame(animate);
 
-  controls.update();
-
+  
   // rotate model
   if (model) {
 
