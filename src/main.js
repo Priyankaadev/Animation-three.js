@@ -9,10 +9,13 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js';
+import LocomotiveScroll from 'locomotive-scroll';
 
+const locomotiveScroll = new LocomotiveScroll()
 // ---------------- SCENE ----------------
 
 const scene = new THREE.Scene();
+
 
 // ---------------- CAMERA ----------------
 
@@ -165,8 +168,8 @@ loader.load(
 
 window.addEventListener("mousemove", (e)=>{
  if (model){
-  const rotationX = (e.clientX/ window.innerWidth -.5) * (Math.PI * 0.3)
-  const rotationY = (e.clientY/ window.innerHeight -.5) *( Math.PI * 0.3)
+  const rotationX = (e.clientX/ window.innerWidth -.5) * (Math.PI * 0.15)
+  const rotationY = (e.clientY/ window.innerHeight -.5) *( Math.PI * 0.15)
 gsap.to(model.rotation, {
   y: rotationX,
   x: rotationY,
