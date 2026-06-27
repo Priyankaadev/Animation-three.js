@@ -1,6 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
-
+import gsap from 'gsap';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
@@ -17,13 +17,13 @@ const scene = new THREE.Scene();
 // ---------------- CAMERA ----------------
 
 const camera = new THREE.PerspectiveCamera(
-  55,
+50,
   window.innerWidth / window.innerHeight,
   0.1,
   100
 );
 
-camera.position.set(0, 0, 6);
+camera.position.set(0, -0.5, 6);
 
 // ---------------- RENDERER ----------------
 
@@ -167,8 +167,12 @@ window.addEventListener("mousemove", (e)=>{
  if (model){
   const rotationX = (e.clientX/ window.innerWidth -.5) * (Math.PI * 0.3)
   const rotationY = (e.clientY/ window.innerHeight -.5) *( Math.PI * 0.3)
-  model.rotation.y = rotationX;
-  model.rotation.x = rotationY;
+gsap.to(model.rotation, {
+  y: rotationX,
+  x: rotationY,
+  duration: 0.5,
+  ease: "power2.out"
+})
  }})
 
 window.addEventListener("resize", ()=>{
